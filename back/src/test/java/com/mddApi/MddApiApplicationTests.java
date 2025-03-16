@@ -1,4 +1,4 @@
-package com.openclassrooms.mddapi;
+package com.mddApi;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
