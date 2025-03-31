@@ -11,7 +11,7 @@ import java.time.LocalDateTime;
 @Setter
 @NoArgsConstructor
 @Entity
-@Table(name = "USERS", indexes = {@Index(name = "USERS_index", columnList = "email", unique = true)})
+@Table(name = "USER", indexes = {@Index(name = "USER_index", columnList = "email", unique = true)})
 public class Users {
 
     @Id
@@ -21,8 +21,8 @@ public class Users {
     @Column(nullable = false, unique = true, length = 255)
     private String email;
 
-    @Column(nullable = false, length = 255)
-    private String name;
+    @Column(nullable = false, length = 255, name = "username")
+    private String username;
 
     @Column(nullable = false, length = 255)
     private String password;
