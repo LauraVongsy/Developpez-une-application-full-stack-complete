@@ -3,6 +3,9 @@ package com.mddApi.services;
 
 
 import com.mddApi.dtos.UserRequestDTO;
+import com.mddApi.dtos.UserResponseDTO;
+import com.mddApi.exceptions.NotFoundException;
+import com.mddApi.mappers.UsersMapper;
 import com.mddApi.models.UserPrincipal;
 import com.mddApi.models.Users;
 import com.mddApi.repositories.UserRepository;
@@ -27,6 +30,9 @@ public class UserService implements UserDetailsService {
 
     @Autowired
     private JwtService jwtService;
+
+    @Autowired
+    private UsersMapper usersMapper;
 
     /**
      * Method used within Spring Security to retrieve user details from the database using email.
@@ -57,4 +63,47 @@ public class UserService implements UserDetailsService {
         userRepository.save(user);
         return jwtService.generateToken(userRequestDTO.getEmail(), user.getId());
     }
+
+    /**
+     * Logs in a user by checking if the email and password match the user details in the database.
+     * If the email is not found, returns a message indicating that the user is not found.
+     * If the password is incorrect, returns a message indicating that the password is incorrect.
+     * If the email and password match, returns a token for the user.
+     *
+     * @param userDTO User details to be checked
+     * @return Token if login is successful, message if user is not found or password is incorrect
+     */
+    public String login(UserRequestDTO userDTO) {
+        Optional<Users> userOptional = userRepository.findByEmail(userDTO.getEmail());
+
+        if (userOptional.isPresent()) {
+            Users user = userOptional.get();
+
+            // Checks if the password matches the user's password
+            if (passwordEncoder.matches(userDTO.getPassword(), user.getPassword())) {
+                //If the password is correct, generates a token for the user
+                return jwtService.generateToken(userDTO.getEmail(), user.getId());
+            } else {
+                return "Password incorrect";
+            }
+        } else {
+            return "User not found";
+        }
+    }
+
+    /**
+     * Finds a user by email and returns the user details.
+     * If the user is not found, throws a NotFoundException.
+     *
+     * @param email
+     * @return
+     */
+    public UserResponseDTO findByEmail(String email) {
+        Users user = userRepository.findByEmail(email).orElseThrow(() -> new NotFoundException("User not found"));
+        System.out.println(user.getId());
+
+        return usersMapper.toResponseDTO(user);
+
+    }
+
 }

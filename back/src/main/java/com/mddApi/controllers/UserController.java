@@ -26,4 +26,15 @@ public class UserController {
             return ResponseEntity.status(400).body(Map.of("error", "register failed"));
         }
     }
+
+    @PostMapping("auth/login")
+    public ResponseEntity<Map<String, String>> login(@RequestBody UserRequestDTO userDTO) {
+        String token = userService.login(userDTO);
+
+        if (token != null) {
+            return ResponseEntity.ok(Map.of("token", token));
+        } else {
+            return ResponseEntity.status(401).body(Map.of("error", "Identifiants incorrects"));
+        }
+    }
 }
