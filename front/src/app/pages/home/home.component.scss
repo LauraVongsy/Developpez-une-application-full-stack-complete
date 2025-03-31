@@ -5,3 +5,50 @@
   align-items: center;
   flex-direction: column;
 }
+.header{
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 50px;
+  border: 1px solid black;
+  img{
+    width:180px;
+  }
+}
+
+.home-container{
+  width: 90%;
+display: flex;
+flex-direction: column;
+margin: auto;
+
+  .buttons-container{
+display: flex;
+flex-direction: row;
+align-items: baseline;
+justify-content: space-between;
+margin-bottom: 50px;
+  }
+
+  .posts-container{
+    display: grid;
+grid-template-columns: repeat(2, 1fr);
+grid-template-rows: repeat(2, 1fr);
+grid-column-gap: 40px;
+grid-row-gap: 40px;
+
+mat-card{
+  background-color: grey;
+display: flex;
+flex-direction: column;
+
+.subtitles{
+  display: flex;
+  flex-direction: row;
+  align-items: baseline;
+  justify-content: space-evenly;
+}
+}
+  }
+}

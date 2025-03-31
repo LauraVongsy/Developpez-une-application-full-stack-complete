@@ -1,5 +1,75 @@
-<div class="center">
-  <img src="/assets/logo_p6.png" alt="logo" />
-  <h1>Welcome to MDD</h1>
-  <button mat-raised-button color="primary" (click)="start()">Commencer</button>
+
+<div *ngIf="$isLogged() | async; else notLogged">
+  <div class="header">
+    <img class="img" src="/assets/logo_p6.png" alt="logo" />
+    <div class="header-buttons">
+      <button (click)="logout()">Se déconnecter</button>
+    <button>Articles</button>
+    <button>Thèmes</button>
+    <button class="user-button"></button>
+    </div>
+    
+  </div>
+  <div class="home-container">
+    <div class="buttons-container">
+      <button mat-raised-button color="primary"> Créer un article</button>
+      <button mat-raised-button color="basic">Trier par</button>
+    </div>
+   <div class="posts-container">
+    <mat-card>
+      <mat-card-header fxLayoutAlign="column">
+        <mat-card-title>Titre de l'article</mat-card-title>
+        
+    </mat-card-header>
+    <div class="subtitles">
+      <mat-card-subtitle>Date:</mat-card-subtitle>
+      <mat-card-subtitle>Auteur:</mat-card-subtitle>
+    </div>     
+    <mat-card-content>texte texte texte texte
+    </mat-card-content>
+    </mat-card>
+  
+    <mat-card>
+      <mat-card-header fxLayoutAlign="center center">
+        <mat-card-title>Titre de l'article</mat-card-title>
+           
+    </mat-card-header>
+    <div class="subtitles">
+      <mat-card-subtitle>Date:</mat-card-subtitle>
+      <mat-card-subtitle>Auteur:</mat-card-subtitle>
+    </div>  
+    <mat-card-content>texte texte texte texte
+    </mat-card-content>
+    </mat-card>
+  
+    <mat-card>
+      <mat-card-header fxLayoutAlign="center center">
+        <mat-card-title>Titre de l'article</mat-card-title>
+         
+    </mat-card-header>
+    <div class="subtitles">
+      <mat-card-subtitle>Date:</mat-card-subtitle>
+      <mat-card-subtitle>Auteur:</mat-card-subtitle>
+    </div>    
+    <mat-card-content>texte texte texte texte
+    </mat-card-content>
+    </mat-card>
+  
+    <mat-card>
+      <mat-card-header fxLayoutAlign="center center">
+        <mat-card-title>Titre de l'article</mat-card-title>
+          
+    </mat-card-header>
+    <div class="subtitles">
+      <mat-card-subtitle>Date:</mat-card-subtitle>
+      <mat-card-subtitle>Auteur:</mat-card-subtitle>
+    </div>  
+    <mat-card-content>texte texte texte texte
+    </mat-card-content>
+    </mat-card>
+   </div>
+  </div>
 </div>
+<ng-template #notLogged>
+  <app-welcome></app-welcome>
+</ng-template>

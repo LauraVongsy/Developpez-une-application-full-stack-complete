@@ -1,4 +1,7 @@
 import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
+import { Observable } from 'rxjs';
+import { AuthService } from 'src/app/services/auth.service';
 
 @Component({
     selector: 'app-home',
@@ -6,12 +9,23 @@ import { Component, OnInit } from '@angular/core';
     styleUrls: ['./home.component.scss'],
     standalone: false
 })
+
 export class HomeComponent implements OnInit {
-  constructor() {}
+
+
+  constructor( 
+     private authService: AuthService,
+     private router : Router
+  ) {}
 
   ngOnInit(): void {}
 
-  start() {
-    alert('Commencez par lire le README et à vous de jouer !');
+  public $isLogged(): Observable<boolean> {
+    return this.authService.$isLogged();
+  }
+
+  public logout(): void {
+    this.authService.logOut();
+    this.router.navigate([''])
   }
 }
