@@ -32,18 +32,34 @@ export class AuthService {
     );
   }
   
-  public login(loginRequest: LoginRequest): Observable<void> {
-    return this.httpClient.post<void>(`${this.pathService}/login`, loginRequest, {
+  public login(loginRequest: LoginRequest): Observable<{ token: string; }> {
+    return this.httpClient.post<{ token: string }>(`${this.pathService}/login`, loginRequest, {
       withCredentials: true
     }).pipe(
-      tap(() => {
-        this.isLogged = true;
-        this.next();  // Met à jour BehaviorSubject
+      tap(response => {
+        const token = response.token;
+        if (token) {
+          localStorage.setItem('token', token); // ou sessionStorage selon ton choix
+          this.isLogged = true;
+          this.next(); // Met à jour le BehaviorSubject
+        }
       })
     );
   }
+  public checkUserIsLogged(){
+    const token = localStorage.getItem('token');
+    if (token) {
+      this.isLogged = true;
+      this.next();
+    } else {
+      this.isLogged = false;
+      this.sessionInformation = undefined;
+      this.next();
+    }
+  }
   public logOut(): void {
     this.sessionInformation = undefined;
+    localStorage.removeItem('token');
     this.isLogged = false;
     this.next();
   }
