@@ -15,13 +15,16 @@ import { RouterModule } from '@angular/router';
 import { WelcomeComponent } from './pages/welcome/welcome.component';
 import { RegisterComponent } from './pages/register/register.component';
 import { LoginComponent } from './pages/login/login.component';
-import { HttpClientModule } from '@angular/common/http'; 
+import { HTTP_INTERCEPTORS, HttpClientModule } from '@angular/common/http'; 
 import {MatFormFieldModule} from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
+import { AuthInterceptor } from './interceptors/auth.interceptor';
+import { ProfileComponent } from './pages/profile/profile.component';
+import { HeaderComponent } from './components/header/header.component';
 
 
 @NgModule({
-  declarations: [AppComponent, HomeComponent, WelcomeComponent, RegisterComponent, LoginComponent],
+  declarations: [AppComponent, HomeComponent, WelcomeComponent, RegisterComponent, LoginComponent, ProfileComponent],
   imports: [
     BrowserModule,
     AppRoutingModule,
@@ -36,9 +39,14 @@ import { MatInputModule } from '@angular/material/input';
     MatToolbarModule,
     MatFormFieldModule,
     HttpClientModule,
-    MatInputModule
+    MatInputModule,
+    HeaderComponent,
   ],
-  providers: [],
+  providers: [{
+    provide: HTTP_INTERCEPTORS,
+    useClass: AuthInterceptor,
+    multi: true  // Important, permet d'avoir plusieurs interceptors si besoin
+  }],
   bootstrap: [AppComponent],
 })
 export class AppModule {}
