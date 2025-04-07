@@ -18,14 +18,13 @@ export class HomeComponent implements OnInit {
      private router : Router
   ) {}
 
-  ngOnInit(): void {}
+  ngOnInit(): void {
+    this.authService.checkUserIsLogged();
+  }
 
   public $isLogged(): Observable<boolean> {
     return this.authService.$isLogged();
   }
 
-  public logout(): void {
-    this.authService.logOut();
-    this.router.navigate([''])
-  }
+  
 }

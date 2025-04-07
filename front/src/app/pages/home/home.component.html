@@ -1,15 +1,6 @@
 
 <div *ngIf="$isLogged() | async; else notLogged">
-  <div class="header">
-    <img class="img" src="/assets/logo_p6.png" alt="logo" />
-    <div class="header-buttons">
-      <button (click)="logout()">Se déconnecter</button>
-    <button>Articles</button>
-    <button>Thèmes</button>
-    <button class="user-button"></button>
-    </div>
-    
-  </div>
+ <app-header></app-header>
   <div class="home-container">
     <div class="buttons-container">
       <button mat-raised-button color="primary"> Créer un article</button>
