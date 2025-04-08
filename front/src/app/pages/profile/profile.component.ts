@@ -3,6 +3,7 @@ import { FormBuilder, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { RegisterRequest } from 'src/app/interfaces/RegisterRequest.interface';
 import { AuthService } from 'src/app/services/auth.service';
+import { UserService } from 'src/app/services/user.service';
 
 @Component({
   selector: 'app-profile',
@@ -16,9 +17,17 @@ export class ProfileComponent {
 
   constructor(private authService: AuthService,
               private fb: FormBuilder,
-              private router: Router) {
+              private router: Router,
+              private userService: UserService) 
+            {
     // Déplacer l'initialisation ici, car fb est maintenant défini
     this.form = this.fb.group({
+      username: [
+        '',
+        [
+          Validators.required,
+        ]
+      ],
       email: [
         '',
         [
@@ -38,11 +47,20 @@ export class ProfileComponent {
   }
 
   public submit(): void {
-    const registerRequest = this.form.value as RegisterRequest;
-    this.authService.login(registerRequest).subscribe({
-        next: () => this.router.navigate(['/home']),
-        error: () => this.onError = true,
-      }
-    );
+    const userUpdateData = {
+      username: this.form.value.username || '',  
+      email: this.form.value.email || '',        
+      password: this.form.value.password || ''   
+    };
+  
+    this.userService.updateUser(userUpdateData)
+      .catch(() => {
+        this.onError = true;
+      });
+      console.log(userUpdateData);
   }
+  
 }
+
+  
+             
