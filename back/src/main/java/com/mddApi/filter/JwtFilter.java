@@ -1,5 +1,6 @@
 package com.mddApi.filter;
 
+import com.mddApi.services.UserDetailsServiceImpl;
 import com.mddApi.services.UserService;
 import com.mddApi.utils.JwtService;
 import jakarta.servlet.FilterChain;
@@ -33,8 +34,8 @@ public class JwtFilter extends OncePerRequestFilter {
      * Used to fetch the UserService bean from ApplicationContext
      * Done to avoid circular dependency issues
      */
-    private UserService getUserService() {
-        return applicationContext.getBean(UserService.class);
+    private UserDetailsServiceImpl getUserService() {
+        return applicationContext.getBean(UserDetailsServiceImpl.class);
     }
 
     @Override

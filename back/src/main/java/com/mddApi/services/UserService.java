@@ -4,6 +4,7 @@ package com.mddApi.services;
 
 import com.mddApi.dtos.UserRequestDTO;
 import com.mddApi.dtos.UserResponseDTO;
+import com.mddApi.dtos.UserUpdateDTO;
 import com.mddApi.exceptions.NotFoundException;
 import com.mddApi.mappers.UsersMapper;
 import com.mddApi.models.UserPrincipal;
@@ -21,7 +22,7 @@ import org.springframework.stereotype.Service;
 import java.util.Optional;
 
 @Service
-public class UserService implements UserDetailsService {
+public class UserService {
     @Autowired
     private UserRepository userRepository;
 
@@ -34,20 +35,7 @@ public class UserService implements UserDetailsService {
     @Autowired
     private UsersMapper usersMapper;
 
-    /**
-     * Method used within Spring Security to retrieve user details from the database using email.
-     * If user exists, returns the details wrapped in a UserPrincipal object for Spring Security authentication process.
-     *
-     * @param email Email of the user
-     * @return User if found in database
-     * @throws UsernameNotFoundException User not found exception from Spring Security
-     */
-    @Override
-    public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {
-        Optional<Users> user = userRepository.findByEmail(email);
 
-        return user.map(UserPrincipal::new).orElseThrow(() -> new UsernameNotFoundException("User email not found " + email));
-    }
 
     public String register(UserRequestDTO userRequestDTO) {
         System.out.print( userRequestDTO);
@@ -105,5 +93,21 @@ public class UserService implements UserDetailsService {
         return usersMapper.toResponseDTO(user);
 
     }
+
+    public void updateUser(UserUpdateDTO userUpdateDTO, Integer userId) {
+        System.out.print(userUpdateDTO);
+        System.out.print(userId);
+        Users user = userRepository.findById(userId)
+                .orElseThrow(() -> new RuntimeException("Utilisateur introuvable"));
+
+        if (userUpdateDTO.getUsername() != null) user.setUsername(userUpdateDTO.getUsername());
+        if (userUpdateDTO.getEmail() != null) user.setEmail(userUpdateDTO.getEmail());
+        if (userUpdateDTO.getPassword() != null && !userUpdateDTO.getPassword().isBlank()) {
+            user.setPassword(passwordEncoder.encode(userUpdateDTO.getPassword()));
+        }
+
+        userRepository.save(user);
+    }
+
 
 }

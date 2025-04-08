@@ -1,6 +1,7 @@
 package com.mddApi.configuration;
 
 import com.mddApi.filter.JwtFilter;
+import com.mddApi.services.UserDetailsServiceImpl;
 import com.mddApi.services.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
@@ -43,7 +44,7 @@ public class SpringSecurityConfig {
      */
     @Bean
     public UserDetailsService userDetailsService() {
-        return new UserService();
+        return new UserDetailsServiceImpl();
     }
 
     /**
