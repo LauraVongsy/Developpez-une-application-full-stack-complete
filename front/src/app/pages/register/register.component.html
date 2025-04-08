@@ -1,13 +1,13 @@
 <div class="header">
     <img class="img" src="/assets/logo_p6.png" alt="logo" />
 </div>
-<div class="register" fxLayout="row" fxLayoutAlign="center center">
+<div class="register" >
     <mat-card>
-        <mat-card-header fxLayoutAlign="center center">
+        <mat-card-header >
             <mat-card-title>Inscription</mat-card-title>
         </mat-card-header>
         <form class="register-form" [formGroup]="form" (ngSubmit)="submit()">
-            <mat-card-content fxLayout="column">
+            <mat-card-content>
                 <mat-form-field fxFlex>
                     <input matInput placeholder="Nom d'utilisateur" formControlName="username">
                 </mat-form-field>
