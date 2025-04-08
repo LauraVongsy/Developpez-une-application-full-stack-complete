@@ -12,9 +12,6 @@ import com.mddApi.models.Users;
 import com.mddApi.repositories.UserRepository;
 import com.mddApi.utils.JwtService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.core.userdetails.UserDetails;
-import org.springframework.security.core.userdetails.UserDetailsService;
-import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
@@ -94,7 +91,7 @@ public class UserService {
 
     }
 
-    public void updateUser(UserUpdateDTO userUpdateDTO, Integer userId) {
+    public String updateUser(UserUpdateDTO userUpdateDTO, Integer userId) {
         System.out.print(userUpdateDTO);
         System.out.print(userId);
         Users user = userRepository.findById(userId)
@@ -107,6 +104,9 @@ public class UserService {
         }
 
         userRepository.save(user);
+
+        // Renvoyer un nouveau token si email changé
+        return jwtService.generateToken(user.getEmail(), user.getId());
     }
 
 

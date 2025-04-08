@@ -54,7 +54,14 @@ public class UserController {
         // Appeler le service pour mettre à jour l'utilisateur avec l'ID et le nom d'utilisateur extraits
         userService.updateUser(userUpdateDTO, userId);
 
-        return ResponseEntity.ok("Profil mis à jour avec succès");
+            String newToken = jwtService.generateToken(userUpdateDTO.getEmail(), userId);
+
+            // Envoi du nouveau token en réponse
+            return ResponseEntity.ok().body(Map.of(
+                    "message", "Profil mis à jour avec succès",
+                    "token", newToken
+            ));
+
     }
 
 }
