@@ -21,10 +21,11 @@ import { MatInputModule } from '@angular/material/input';
 import { AuthInterceptor } from './interceptors/auth.interceptor';
 import { ProfileComponent } from './pages/profile/profile.component';
 import { HeaderComponent } from './components/header/header.component';
+import { ThemesComponent } from './pages/themes/themes.component';
 
 
 @NgModule({
-  declarations: [AppComponent, HomeComponent, WelcomeComponent, RegisterComponent, LoginComponent, ProfileComponent],
+  declarations: [AppComponent, HomeComponent, WelcomeComponent, RegisterComponent, LoginComponent, ProfileComponent, ThemesComponent],
   imports: [
     BrowserModule,
     AppRoutingModule,

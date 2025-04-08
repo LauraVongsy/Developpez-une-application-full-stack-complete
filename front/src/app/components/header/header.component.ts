@@ -23,4 +23,7 @@ export class HeaderComponent {
     this.router.navigate(['/profile']);
   }
   
+  public openThemes(): void {
+    this.router.navigate(['/themes']);
+  }
 }
