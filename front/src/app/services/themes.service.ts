@@ -24,4 +24,22 @@ export class ThemesService {
       return []; // Propager l'erreur pour la gestion ultérieure}
     }
   }
+  public async subscribeToTheme(id: number): Promise<void> {
+    try {
+      const response = await this.httpClient
+        .post(`${this.pathService}/themes/subscribe/${id}`, {})
+        .toPromise();
+    } catch (error) {
+      console.error('Erreur lors de la souscription au thème:', error);
+    }
+  }
+  public async unsubscribeToTheme(id: number): Promise<void> {
+    try {
+      const response = await this.httpClient
+        .delete(`${this.pathService}/themes/unsubscribe/${id}`, {})
+        .toPromise();
+    } catch (error) {
+      console.error('Erreur lors de la désinscription au thème:', error);
+    }
+  }
 }

@@ -30,6 +30,26 @@ public getThemes (): void {
   }
 
   public subscribeToTheme(id: number): void {
-    console.log("bien souscrit au them");
+   this.themesService.subscribeToTheme(id)
+    .then(() => {
+      console.log("souscrit au theme");
+      this.getThemes();
+    }
+    )
+    .catch((error:any) => {
+      console.error('Erreur lors de la souscription au thème:', error);
+    }
+    );
   }
+  public unsubscribeToTheme(id: number): void {
+    this.themesService.unsubscribeToTheme(id)
+      .then(() => {
+        console.log("désinscrit du theme");
+        this.getThemes();
+      })
+      .catch((error:any) => {
+        console.error('Erreur lors de la désinscription au thème:', error);
+      });
+  }
+  
 }
