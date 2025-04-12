@@ -18,7 +18,9 @@ import java.util.stream.Collectors;
 public class SubscriptionService {
 @Autowired
     private SubscriptionRepository subscriptionRepository;
+@Autowired
 private ThemeRepository themeRepository;
+
     public void subscribeToTheme(Integer userId, Integer themeId) {
         SubscriptionId subscriptionId = new SubscriptionId(userId, themeId);
 
