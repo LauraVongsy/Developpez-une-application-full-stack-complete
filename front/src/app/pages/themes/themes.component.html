@@ -12,7 +12,7 @@
         <p>{{ theme.description }}</p>
       </mat-card-content>
 
-      <button mat-raised-button color="primary" (click)="subscribeToTheme(theme.id)">S'abonner</button>
+      <button mat-raised-button color="primary" (click)="subscribeToTheme(theme.id)" [disabled]="isSubscribed(theme.id)">S'abonner</button>
     </mat-card>
   </div>
 </div>

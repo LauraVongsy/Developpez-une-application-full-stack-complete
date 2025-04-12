@@ -1,6 +1,8 @@
 import { Injectable } from '@angular/core';
 import { Themes } from '../interfaces/Themes.interface';
 import { HttpClient } from '@angular/common/http';
+import { Observable } from 'rxjs';
+import { Subscriptions } from '../interfaces/Subscriptions.interface';
 
 @Injectable({
   providedIn: 'root',
@@ -8,38 +10,26 @@ import { HttpClient } from '@angular/common/http';
 export class ThemesService {
   private pathService = 'http://localhost:8080';
   private themes: Themes[] = [];
+
   constructor(private httpClient: HttpClient) {}
 
-  public async getThemes(): Promise<Themes[] | []> {
-    try {
-      // Requête PUT pour mettre à jour l'utilisateur
-      const response = await this.httpClient
-        .get<Themes[]>(`${this.pathService}/themes`)
-        .toPromise();
-      this.themes = response || [];
+  // Utilisation d'Observable pour obtenir les thèmes
+  public getThemes(): Observable<Themes[]> {
+    return this.httpClient.get<Themes[]>(`${this.pathService}/themes`);
+  }
 
-      return this.themes as Themes[];
-    } catch (error) {
-      console.error("Erreur lors de la mise à jour de l'utilisateur:", error);
-      return []; // Propager l'erreur pour la gestion ultérieure}
-    }
+  // Utilisation d'Observable pour souscrire à un thème
+  public subscribeToTheme(id: number): Observable<void> {
+    return this.httpClient.post<void>(`${this.pathService}/themes/subscribe/${id}`, {});
   }
-  public async subscribeToTheme(id: number): Promise<void> {
-    try {
-      const response = await this.httpClient
-        .post(`${this.pathService}/themes/subscribe/${id}`, {})
-        .toPromise();
-    } catch (error) {
-      console.error('Erreur lors de la souscription au thème:', error);
-    }
+
+  // Utilisation d'Observable pour se désabonner d'un thème
+  public unsubscribeToTheme(id: number): Observable<void> {
+    return this.httpClient.delete<void>(`${this.pathService}/themes/unsubscribe/${id}`);
   }
-  public async unsubscribeToTheme(id: number): Promise<void> {
-    try {
-      const response = await this.httpClient
-        .delete(`${this.pathService}/themes/unsubscribe/${id}`, {})
-        .toPromise();
-    } catch (error) {
-      console.error('Erreur lors de la désinscription au thème:', error);
-    }
+
+  // Récupérer les abonnements de l'utilisateur, déjà bien converti en Observable
+  public getAllSubscriptions(): Observable<Subscriptions[]> {
+    return this.httpClient.get<Subscriptions[]>(`${this.pathService}/themes/subscriptions`);
   }
 }
