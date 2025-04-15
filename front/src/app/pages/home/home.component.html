@@ -5,10 +5,10 @@
       <button mat-raised-button color="primary" (click)="createArticle()">
         Créer un article
       </button>
-      <button mat-raised-button color="basic">Trier par</button>
+      <button mat-raised-button color="basic" (click)="toggleSortOrder()">Trier par</button>
     </div>
     <div class="posts-container">
-      <mat-card *ngFor="let article of articles" class="article-card">
+      <mat-card *ngFor="let article of sortedArticles" class="article-card">
         <mat-card-header>
           <mat-card-title>{{ article.title }}</mat-card-title>
         </mat-card-header>
