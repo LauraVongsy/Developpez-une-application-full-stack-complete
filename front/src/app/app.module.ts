@@ -22,10 +22,13 @@ import { AuthInterceptor } from './interceptors/auth.interceptor';
 import { ProfileComponent } from './pages/profile/profile.component';
 import { HeaderComponent } from './components/header/header.component';
 import { ThemesComponent } from './pages/themes/themes.component';
+import { CreateArticleComponent } from './pages/create-article/create-article.component';
+import { MatSelectModule } from '@angular/material/select';
+import { DateFormatPipe } from './date-format.pipe';
 
 
 @NgModule({
-  declarations: [AppComponent, HomeComponent, WelcomeComponent, RegisterComponent, LoginComponent, ProfileComponent, ThemesComponent],
+  declarations: [AppComponent, HomeComponent, WelcomeComponent, RegisterComponent, LoginComponent, ProfileComponent, ThemesComponent, CreateArticleComponent],
   imports: [
     BrowserModule,
     AppRoutingModule,
@@ -41,7 +44,9 @@ import { ThemesComponent } from './pages/themes/themes.component';
     MatFormFieldModule,
     HttpClientModule,
     MatInputModule,
+    MatSelectModule,
     HeaderComponent,
+    DateFormatPipe
   ],
   providers: [{
     provide: HTTP_INTERCEPTORS,

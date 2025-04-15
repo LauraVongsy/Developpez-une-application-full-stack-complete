@@ -1,0 +1,75 @@
+/* Variables */
+$primary-color: #1976d2;  // Couleur primaire pour la bordure et les boutons
+$primary-color-dark: #1565c0;  // Couleur primaire au focus ou survol
+
+/* Styles pour le conteneur du formulaire */
+.create-article {
+  display: flex;
+  justify-content: center; /* Centre le formulaire horizontalement */
+  align-items: center; /* Centre le formulaire verticalement */
+  min-height: 100vh; /* Prend toute la hauteur de la fenêtre */
+  width: 100vw; /* Prend toute la largeur de la fenêtre */
+}
+
+mat-card {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+  background-color: white; /* Fond blanc pour le formulaire */
+  padding: 20px;
+  border:none !important;
+  box-shadow:none !important;
+  width: 100vw;
+ 
+}
+mat-card-content{
+    width: 50vw;
+}
+mat-card-header {
+  text-align: center;
+  margin-bottom: 20px;
+}
+
+mat-form-field {
+  display: block;
+  margin-bottom: 20px; /* Espacement entre les champs */
+  .mat-form-field-appearance-outline .mat-form-field-outline {
+    color: purple;
+  }
+
+}
+
+
+input:focus, textarea:focus {
+  outline: none;
+  
+}
+
+button {
+  width: 100%;
+  padding: 10px;
+  
+  color: white;
+  font-size: 16px;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: background-color 0.3s ease; /* Transition pour l'effet hover */
+}
+
+button:disabled {
+  background-color: #b0bec5; /* Couleur grise pour les boutons désactivés */
+}
+
+button:hover {
+  background-color: $primary-color-dark; /* Effet au survol */
+}
+
+/* Affichage de l'erreur */
+.error {
+  color: red;
+  display: block;
+  text-align: center;
+  margin-top: 10px;
+}

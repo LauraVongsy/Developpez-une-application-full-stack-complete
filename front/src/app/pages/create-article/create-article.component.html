@@ -1,0 +1,32 @@
+<app-header></app-header>
+<div class="create-article">
+  <mat-card>
+    <mat-card-header>
+      <mat-card-title>Créer un nouvel article</mat-card-title>
+    </mat-card-header>
+    <form class="create-article-form" [formGroup]="form" (ngSubmit)="submit()">
+      <mat-card-content>
+        <mat-form-field>
+            <mat-label>Sélectionnez un thème</mat-label>
+            <mat-select formControlName="themeId">
+              <mat-option *ngFor="let theme of themes" [value]="theme.id">
+                {{ theme.name }}
+              </mat-option>
+            </mat-select>        </mat-form-field>
+        <mat-form-field>
+          <input matInput  placeholder="Titre de l'article" formControlName="title" />
+        </mat-form-field>
+        <mat-form-field>
+          <textarea
+            matInput
+            placeholder="Contenu de l'article"
+            formControlName="content"
+          ></textarea>
+        </mat-form-field>
+      </mat-card-content>
+      <button mat-raised-button color="primary" type="submit" [disabled]="form.invalid">
+        Créer
+      </button>
+      <span *ngIf="onError" class="error ml2">An error occurred</span>
+    </form>
+  </mat-card>

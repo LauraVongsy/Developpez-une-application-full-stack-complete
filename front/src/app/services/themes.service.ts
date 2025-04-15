@@ -25,7 +25,7 @@ export class ThemesService {
 
   // Utilisation d'Observable pour se désabonner d'un thème
   public unsubscribeToTheme(id: number): Observable<void> {
-    return this.httpClient.delete<void>(`${this.pathService}/themes/unsubscribe/${id}`);
+    return this.httpClient.post<void>(`${this.pathService}/themes/unsubscribe/${id}`,{});
   }
 
   // Récupérer les abonnements de l'utilisateur, déjà bien converti en Observable

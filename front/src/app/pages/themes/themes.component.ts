@@ -65,7 +65,7 @@ export class ThemesComponent implements OnInit {
       (subscriptions: Subscriptions[]) => {
         console.log('Abonnements récupérés:', subscriptions);
         this.subscribedThemes = subscriptions;
-      },
+      },  
       (error) => {
         console.error('Erreur lors de la récupération des abonnements:', error);
       }

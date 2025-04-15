@@ -40,49 +40,18 @@
       <mat-card-title>Abonnements</mat-card-title>
     </mat-card-header>
     <div class="posts-container">
-      <mat-card>
-        <mat-card-header >
-          <mat-card-title>Titre du thème</mat-card-title>
-        </mat-card-header>
-        <div class="subtitles">
-          <mat-card-subtitle>Date:</mat-card-subtitle>
-          <mat-card-subtitle>Auteur:</mat-card-subtitle>
-        </div>
-        <mat-card-content>texte texte texte texte </mat-card-content>
-      </mat-card>
+      <!-- Loop à travers les thèmes et créer une mat-card pour chaque thème -->
+    <mat-card *ngFor="let subscription of subscribedThemes" class="theme-card">
+      <mat-card-header>
+        <mat-card-title>{{ subscription.themeName }}</mat-card-title>
+      </mat-card-header>
 
-      <mat-card>
-        <mat-card-header>
-          <mat-card-title>Titre du thème</mat-card-title>
-        </mat-card-header>
-        <div class="subtitles">
-          <mat-card-subtitle>Date:</mat-card-subtitle>
-          <mat-card-subtitle>Auteur:</mat-card-subtitle>
-        </div>
-        <mat-card-content>texte texte texte texte </mat-card-content>
-      </mat-card>
+      <mat-card-content>
+        <p>{{ subscription.themeDescription }}</p>
+      </mat-card-content>
 
-      <mat-card>
-        <mat-card-header>
-          <mat-card-title>Titre du thème</mat-card-title>
-        </mat-card-header>
-        <div class="subtitles">
-          <mat-card-subtitle>Date:</mat-card-subtitle>
-          <mat-card-subtitle>Auteur:</mat-card-subtitle>
-        </div>
-        <mat-card-content>texte texte texte texte </mat-card-content>
-      </mat-card>
-
-      <mat-card>
-        <mat-card-header>
-          <mat-card-title>Titre du thème</mat-card-title>
-        </mat-card-header>
-        <div class="subtitles">
-          <mat-card-subtitle>Date:</mat-card-subtitle>
-          <mat-card-subtitle>Auteur:</mat-card-subtitle>
-        </div>
-        <mat-card-content>texte texte texte texte </mat-card-content>
-      </mat-card>
+      <button mat-raised-button color="primary" (click)="unsubscribeToTheme(subscription.themeId)" >Se désabonner</button>
+    </mat-card>
     </div>
   </div>
 </div>

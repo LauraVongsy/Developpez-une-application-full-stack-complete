@@ -1,8 +1,10 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { FormBuilder, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { RegisterRequest } from 'src/app/interfaces/RegisterRequest.interface';
+import { Subscriptions } from 'src/app/interfaces/Subscriptions.interface';
 import { AuthService } from 'src/app/services/auth.service';
+import { ThemesService } from 'src/app/services/themes.service';
 import { UserService } from 'src/app/services/user.service';
 
 @Component({
@@ -11,15 +13,19 @@ import { UserService } from 'src/app/services/user.service';
   styleUrl: './profile.component.scss',
   standalone: false,
 })
-export class ProfileComponent {
+export class ProfileComponent implements OnInit {
   public onError = false;
   public form;
+  subscribedThemes: Subscriptions[] = [];
 
-  constructor(private authService: AuthService,
+
+  constructor(
               private fb: FormBuilder,
-              private router: Router,
+              private themesService: ThemesService,
               private userService: UserService) 
             {
+
+
     // Déplacer l'initialisation ici, car fb est maintenant défini
     this.form = this.fb.group({
       username: [
@@ -45,6 +51,23 @@ export class ProfileComponent {
       ]
     });
   }
+  ngOnInit(): void {
+ 
+    this.getAllSubscriptions();
+  }
+
+// Récupérer les abonnements de l'utilisateur
+  public getAllSubscriptions(): void {
+    this.themesService.getAllSubscriptions().subscribe(
+      (subscriptions: Subscriptions[]) => {
+        console.log('Abonnements récupérés:', subscriptions);
+        this.subscribedThemes = subscriptions;
+      },
+      (error) => {
+        console.error('Erreur lors de la récupération des abonnements:', error);
+      }
+    );
+  }
 
   public submit(): void {
     const userUpdateData = {
@@ -58,6 +81,18 @@ export class ProfileComponent {
         this.onError = true;
       });
       console.log(userUpdateData);
+  }
+
+  public unsubscribeToTheme(id: number): void {
+    this.themesService.unsubscribeToTheme(id).subscribe(
+      () => {
+        console.log('Désinscription réussie', id);
+        this.getAllSubscriptions();  // Recharger la liste des thèmes après l'abonnement
+      },
+      (error) => {
+        console.error('Erreur lors de la désinscription au thème:', error);
+      }
+    );
   }
   
 }

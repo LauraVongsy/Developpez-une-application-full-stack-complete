@@ -26,4 +26,7 @@ export class HeaderComponent {
   public openThemes(): void {
     this.router.navigate(['/themes']);
   }
+  public openHome(): void {
+    this.router.navigate(['/home']);
+  }
 }
