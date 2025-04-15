@@ -42,7 +42,7 @@ public class SpringSecurityConfig {
     /**
      * Defines a UserDetailsService bean for user authentication
      */
-    @Bean
+
     public UserDetailsService userDetailsService() {
         return new UserDetailsServiceImpl();
     }

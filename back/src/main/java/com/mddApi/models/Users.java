@@ -33,11 +33,7 @@ public class Users {
     @Column()
     private LocalDateTime updated_at;
 
-//    @OneToMany(mappedBy = "owner", cascade = CascadeType.ALL, orphanRemoval = true)
-//    private List<Rentals> rentals;
-//
-//    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
-//    private List<Message> messages;
+
 
     @PrePersist
     protected void onCreate() {

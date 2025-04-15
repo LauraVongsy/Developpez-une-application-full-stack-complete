@@ -1,5 +1,9 @@
 package com.mddApi.utils;
 
+
+import org.springframework.stereotype.Service;
+
+
 /**
  * converti la réponse envoyée au frontend en json
  */
