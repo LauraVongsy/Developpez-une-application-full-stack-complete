@@ -9,7 +9,7 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { HomeComponent } from './pages/home/home.component';
-import { ReactiveFormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
 import { RouterModule } from '@angular/router';
 import { WelcomeComponent } from './pages/welcome/welcome.component';
@@ -25,10 +25,12 @@ import { ThemesComponent } from './pages/themes/themes.component';
 import { CreateArticleComponent } from './pages/create-article/create-article.component';
 import { MatSelectModule } from '@angular/material/select';
 import { DateFormatPipe } from './date-format.pipe';
+import { ArticlesComponent } from './pages/articles/articles.component';
+import { ButtonGoBackComponent } from './components/button-go-back/button-go-back.component';
 
 
 @NgModule({
-  declarations: [AppComponent, HomeComponent, WelcomeComponent, RegisterComponent, LoginComponent, ProfileComponent, ThemesComponent, CreateArticleComponent],
+  declarations: [AppComponent, HomeComponent, WelcomeComponent, RegisterComponent, LoginComponent, ProfileComponent, ThemesComponent, CreateArticleComponent, ArticlesComponent],
   imports: [
     BrowserModule,
     AppRoutingModule,
@@ -46,7 +48,9 @@ import { DateFormatPipe } from './date-format.pipe';
     MatInputModule,
     MatSelectModule,
     HeaderComponent,
-    DateFormatPipe
+    ButtonGoBackComponent,
+    DateFormatPipe,
+    FormsModule
   ],
   providers: [{
     provide: HTTP_INTERCEPTORS,

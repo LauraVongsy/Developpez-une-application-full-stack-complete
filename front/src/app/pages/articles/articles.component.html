@@ -1,0 +1,41 @@
+<app-header></app-header>
+<div class="article-container">
+    <mat-card  class="article-card" >
+      <mat-card-header>
+        <button (click)="goBack()">go back</button>
+        <mat-card-title>{{ article.title }}</mat-card-title>
+      </mat-card-header>
+      <mat-card-subtitle>
+        <p>Date : {{ article.createdAt | dateFormat }}</p>
+
+        <p>Créé par : {{ article.authorName }}</p>
+
+        <p>Thème : {{ article.themeName }}</p>
+      </mat-card-subtitle>
+      <mat-card-content>
+        <p>{{ article.content }}</p>
+      </mat-card-content>
+    </mat-card>
+  </div>
+
+  <!-- Séparateur -->
+<hr class="comment-separator" />
+
+<!-- Section Commentaires -->
+<div class="comments-section">
+  <h2>Commentaires</h2>
+
+  <!-- Liste des commentaires -->
+  <div class="comment" *ngFor="let comment of comments">
+    <strong class="comment-username">{{ comment.authorName }}:</strong>
+    <span class="comment-text" >{{ comment.content }}</span>
+  </div>
+
+  <!-- Zone d'ajout d’un commentaire -->
+  <mat-form-field appearance="fill" class="comment-input">
+    <mat-label>Ajouter un commentaire</mat-label>
+    <input matInput [(ngModel)]="commentText" placeholder="Écrivez votre commentaire ici..."  />
+  </mat-form-field>
+
+  <button mat-raised-button color="primary" (click)="sendComment(article.id)">Envoyer</button>
+</div>
