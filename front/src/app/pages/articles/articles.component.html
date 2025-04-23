@@ -32,10 +32,13 @@
   </div>
 
   <!-- Zone d'ajout d’un commentaire -->
-  <mat-form-field appearance="fill" class="comment-input">
-    <mat-label>Ajouter un commentaire</mat-label>
-    <input matInput [(ngModel)]="commentText" placeholder="Écrivez votre commentaire ici..."  />
-  </mat-form-field>
-
-  <button mat-raised-button color="primary" (click)="sendComment(article.id)">Envoyer</button>
+   <div class="comment-zone">
+    <mat-form-field appearance="fill" class="comment-input">
+      <mat-label>Ajouter un commentaire</mat-label>
+      <input matInput [(ngModel)]="commentText" placeholder="Écrivez votre commentaire ici..."  />
+    </mat-form-field>
+  
+    <button class="send-btn" (click)="sendComment(article.id)"></button>
+   </div>
+  
 </div>
