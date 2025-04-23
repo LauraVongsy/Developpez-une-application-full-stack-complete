@@ -1,0 +1,31 @@
+.back-button{
+    background-color: white;
+    border: none;
+    min-width: auto;
+    position: fixed;
+    left: 30px;
+    .arrow-icon {
+        font-size: 32px; // ou 36px, 40px selon le rendu que tu veux
+        height: 32px;
+        width: 32px;
+        cursor:pointer;
+      }
+      
+}
+@media (max-width:480px){
+  .back-button{
+    background-color: white;
+    border: none;
+    min-width: auto;
+    position: fixed;
+    left: 30px;
+    top: 30px;
+    .arrow-icon {
+        font-size: 32px; // ou 36px, 40px selon le rendu que tu veux
+        height: 32px;
+        width: 32px;
+        cursor:pointer;
+      }
+      
+}
+}

@@ -70,5 +70,9 @@ constructor(
   public createArticle(): void {
     this.router.navigate(['/create-article']);
   }
+
+  public openArticle(id :number): void{
+    this.router.navigate([`/article/${id}`]);
+  }
   
 }

@@ -1,10 +1,16 @@
 <div class="header">
-    <img class="img" src="/assets/logo_p6.png" alt="logo" (click)="openHome()" />
-    <div class="header-buttons">
-      <button (click)="logout()">Se déconnecter</button>
-    <button>Articles</button>
-    <button (click)="openThemes()">Thèmes</button>
+  <img class="img" src="/assets/logo_p6.png" alt="logo" (click)="openHome()" />
+
+  <!-- Burger menu visible en mobile -->
+  <button class="burger-menu" (click)="toggleMenu()">
+    <mat-icon>menu</mat-icon>
+  </button>
+
+  <!-- Menu normal (masqué en mobile, affiché via burger) -->
+  <div class="header-buttons" [class.show]="menuOpen">
+    <button class="logout-button" (click)="logout()">Se déconnecter</button>
+    <button class="articles-button" (click)="openHome()" [ngClass]="{ 'active': isOnHome() }">Articles</button>
+    <button class="theme-button" (click)="openThemes()">Thèmes</button>
     <button class="user-button" (click)="openProfile()"></button>
-    </div>
-    
   </div>
+</div>
