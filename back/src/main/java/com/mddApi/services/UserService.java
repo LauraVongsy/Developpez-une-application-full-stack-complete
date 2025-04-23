@@ -7,7 +7,6 @@ import com.mddApi.dtos.UserResponseDTO;
 import com.mddApi.dtos.UserUpdateDTO;
 import com.mddApi.exceptions.NotFoundException;
 import com.mddApi.mappers.UsersMapper;
-import com.mddApi.models.UserPrincipal;
 import com.mddApi.models.Users;
 import com.mddApi.repositories.UserRepository;
 import com.mddApi.utils.JwtService;
@@ -32,6 +31,9 @@ public class UserService {
     @Autowired
     private UsersMapper usersMapper;
 
+    public Optional<Users> findById(Integer userId){
+        return userRepository.findById(userId);
+    }
 
 
     public String register(UserRequestDTO userRequestDTO) {
