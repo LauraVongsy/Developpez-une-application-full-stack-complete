@@ -13,7 +13,14 @@ export class ButtonGoBackComponent {
     private router: Router
   ){}
 
-  public goBack(){
-    this.router.navigate(['/'])
+  public goBack(): void {
+    const currentUrl = this.router.url;
+  
+    if (currentUrl === '/register' || currentUrl === '/login') {
+      this.router.navigate(['/']);
+    } else {
+      this.router.navigate(['/home']);
+    }
   }
+  
 }

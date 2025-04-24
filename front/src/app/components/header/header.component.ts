@@ -21,6 +21,12 @@ menuOpen =false;
    public isOnHome(): boolean {
       return this.router.url === '/home';
     }
+   public isOnThemes(): boolean {
+      return this.router.url === '/themes';
+    }
+   public isOnProfile(): boolean {
+      return this.router.url === '/profile';
+    }
    public toggleMenu(): void {
       this.menuOpen = !this.menuOpen;
     }

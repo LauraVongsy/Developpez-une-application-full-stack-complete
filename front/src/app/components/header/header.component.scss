@@ -28,8 +28,11 @@
           background-repeat: no-repeat;
           border-radius: 20px;
           border: none;
-          margin-left:30px;
+          margin:0 30px;
           cursor: pointer;
+          &.active{
+            border: 2px solid #7450EB;
+          }
 
         }
         .img{
@@ -47,7 +50,7 @@
           color: #8B0000;
           font-size: medium;
         }
-        .articles-button {
+        .articles-button, .theme-button {
           color: black; 
           &.active {
             color: #7450EB; 

@@ -10,7 +10,7 @@
   <div class="header-buttons" [class.show]="menuOpen">
     <button class="logout-button" (click)="logout()">Se déconnecter</button>
     <button class="articles-button" (click)="openHome()" [ngClass]="{ 'active': isOnHome() }">Articles</button>
-    <button class="theme-button" (click)="openThemes()">Thèmes</button>
-    <button class="user-button" (click)="openProfile()"></button>
+    <button class="theme-button" (click)="openThemes()" [ngClass]="{ 'active': isOnThemes() }">Thèmes</button>
+    <button class="user-button" (click)="openProfile()" [ngClass]="{ 'active': isOnProfile() }"></button>
   </div>
 </div>
