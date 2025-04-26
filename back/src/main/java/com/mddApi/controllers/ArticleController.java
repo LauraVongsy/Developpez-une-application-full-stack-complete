@@ -2,10 +2,17 @@ package com.mddApi.controllers;
 
 import com.mddApi.dtos.ArticleRequestDTO;
 import com.mddApi.dtos.ArticleResponseDTO;
+import com.mddApi.dtos.SubscriptionResponseDTO;
+import com.mddApi.models.Themes;
 import com.mddApi.services.ArticleService;
+import com.mddApi.services.SubscriptionService;
+import com.mddApi.services.UserService;
 import com.mddApi.utils.JwtService;
 import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
+import org.springframework.security.core.userdetails.User;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -13,6 +20,10 @@ import java.util.List;
 public class ArticleController {
     @Autowired
     ArticleService articleService;
+    @Autowired
+    UserService userService;
+    @Autowired
+    SubscriptionService subscriptionService;
     @Autowired
     JwtService jwtService;
 
@@ -26,8 +37,12 @@ public class ArticleController {
         return jwtService.extractUserId(token);
     }
      @GetMapping("/articles")
-     public List<ArticleResponseDTO> getAllArticles() {
-        return articleService.getAllArticles();
+     public List<ArticleResponseDTO> getAllArticles(@AuthenticationPrincipal UserDetails userDetails ,  HttpServletRequest request) {
+         Integer userId = extractUserIdFromToken(request);
+         System.out.print(userId);
+        List<SubscriptionResponseDTO> userThemes = subscriptionService.getUserSubscriptions(userId);
+        System.out.println(userThemes);
+        return articleService.getAllArticles(userThemes);
     }
     // Endpoint to get an article by ID
    @GetMapping("/articles/{id}")
