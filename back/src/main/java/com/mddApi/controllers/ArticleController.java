@@ -9,6 +9,7 @@ import com.mddApi.services.SubscriptionService;
 import com.mddApi.services.UserService;
 import com.mddApi.utils.JwtService;
 import jakarta.servlet.http.HttpServletRequest;
+import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.core.userdetails.User;
@@ -51,20 +52,9 @@ public class ArticleController {
     }
     // Endpoint to create a new article
    @PostMapping("/articles")
-    public ArticleResponseDTO createArticle(@RequestBody ArticleRequestDTO dto , HttpServletRequest request) {
+    public ArticleResponseDTO createArticle(@Valid @RequestBody ArticleRequestDTO dto , HttpServletRequest request) {
         Integer userId = extractUserIdFromToken(request);
         return articleService.createArticle(dto, userId );
     }
-    // Endpoint to update an article
-    @PutMapping("/articles/{id}")
-   public ArticleResponseDTO updateArticle(@PathVariable Integer id, @RequestBody ArticleRequestDTO dto) {
-      return articleService.updateArticle(id, dto);
-}
-    // Endpoint to delete an article
-    @DeleteMapping("/articles/{id}")
-   public void deleteArticle(@PathVariable Integer id) {
-       articleService.deleteArticle(id);
-    }
-
 
 }

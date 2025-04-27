@@ -98,38 +98,5 @@ public class ArticleService {
         );
     }
 
-    public ArticleResponseDTO updateArticle(Integer id ,ArticleRequestDTO dto){
-        Article article = new Article();
-        article.setId(id);
-        article.setTitle(dto.getTitle());
-        article.setContent(dto.getContent());
-        article.setCreatedAt(dto.getCreatedAt());
 
-        // Associer un utilisateur à partir de son ID
-        Users author = new Users();
-        author.setId(dto.getAuthorId());
-        article.setAuthor(author);
-
-        // Associer un thème à partir de son ID
-        Themes theme = new Themes();
-        theme.setId(dto.getThemeId());
-        article.setTheme(theme);
-
-        // Sauvegarde en base
-        Article saved = articleRepository.save(article);
-
-        // Construction de la réponse DTO avec noms de l’auteur et du thème
-        return new ArticleResponseDTO(
-                saved.getId(),
-                saved.getTitle(),
-                saved.getContent(),
-                saved.getCreatedAt(),
-                saved.getAuthor().getUsername(), // Assure-toi que ce getter existe bien
-                saved.getTheme().getName()       // Idem ici
-        );
-    }
-
-    public void deleteArticle(Integer id) {
-        articleRepository.deleteById(id);
-    }
 }
