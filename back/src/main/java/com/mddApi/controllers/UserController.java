@@ -2,12 +2,10 @@ package com.mddApi.controllers;
 
 import com.mddApi.dtos.UserRequestDTO;
 import com.mddApi.dtos.UserUpdateDTO;
-import com.mddApi.models.UserPrincipal;
 import com.mddApi.services.UserService;
 import com.mddApi.utils.JwtService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.Map;

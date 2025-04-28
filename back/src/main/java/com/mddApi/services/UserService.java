@@ -5,6 +5,7 @@ package com.mddApi.services;
 import com.mddApi.dtos.UserRequestDTO;
 import com.mddApi.dtos.UserResponseDTO;
 import com.mddApi.dtos.UserUpdateDTO;
+import com.mddApi.exceptions.BadRequestException;
 import com.mddApi.exceptions.NotFoundException;
 import com.mddApi.mappers.UsersMapper;
 import com.mddApi.models.Users;
@@ -37,9 +38,8 @@ public class UserService {
 
 
     public String register(UserRequestDTO userRequestDTO) {
-        System.out.print( userRequestDTO);
         if (userRepository.findByEmail(userRequestDTO.getEmail()).isPresent()) {
-            return "This email is already in use";
+            throw new BadRequestException("This email is already in use");
         }
 
         Users user = new Users();
@@ -61,22 +61,16 @@ public class UserService {
      * @return Token if login is successful, message if user is not found or password is incorrect
      */
     public String login(UserRequestDTO userDTO) {
-        Optional<Users> userOptional = userRepository.findByEmail(userDTO.getEmail());
+        Users user = userRepository.findByEmail(userDTO.getEmail())
+                .orElseThrow(() -> new NotFoundException("Utilisateur non trouvé avec cet email : " + userDTO.getEmail()));
 
-        if (userOptional.isPresent()) {
-            Users user = userOptional.get();
-
-            // Checks if the password matches the user's password
-            if (passwordEncoder.matches(userDTO.getPassword(), user.getPassword())) {
-                //If the password is correct, generates a token for the user
-                return jwtService.generateToken(userDTO.getEmail(), user.getId());
-            } else {
-                return "Password incorrect";
-            }
-        } else {
-            return "User not found";
+        if (!passwordEncoder.matches(userDTO.getPassword(), user.getPassword())) {
+            throw new BadRequestException("Mot de passe incorrect");
         }
+
+        return jwtService.generateToken(user.getEmail(), user.getId());
     }
+
 
     /**
      * Finds a user by email and returns the user details.
@@ -86,7 +80,8 @@ public class UserService {
      * @return
      */
     public UserResponseDTO findByEmail(String email) {
-        Users user = userRepository.findByEmail(email).orElseThrow(() -> new NotFoundException("User not found"));
+        Users user = userRepository.findByEmail(email)
+                .orElseThrow(() -> new NotFoundException("User not found"));
         System.out.println(user.getId());
 
         return usersMapper.toResponseDTO(user);
@@ -97,7 +92,7 @@ public class UserService {
         System.out.print(userUpdateDTO);
         System.out.print(userId);
         Users user = userRepository.findById(userId)
-                .orElseThrow(() -> new RuntimeException("Utilisateur introuvable"));
+                .orElseThrow(() -> new NotFoundException("Utilisateur introuvable"));
 
         if (userUpdateDTO.getUsername() != null) user.setUsername(userUpdateDTO.getUsername());
         if (userUpdateDTO.getEmail() != null) user.setEmail(userUpdateDTO.getEmail());

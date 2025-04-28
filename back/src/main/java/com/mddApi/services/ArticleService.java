@@ -3,14 +3,13 @@ package com.mddApi.services;
 import com.mddApi.dtos.ArticleRequestDTO;
 import com.mddApi.dtos.ArticleResponseDTO;
 import com.mddApi.dtos.SubscriptionResponseDTO;
+import com.mddApi.exceptions.NotFoundException;
 import com.mddApi.models.Article;
-import com.mddApi.models.Subscriptions;
 import com.mddApi.models.Themes;
 import com.mddApi.models.Users;
 import com.mddApi.repositories.ArticleRepository;
 import com.mddApi.repositories.ThemeRepository;
 import com.mddApi.utils.JwtService;
-import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -63,7 +62,7 @@ public class ArticleService {
                     article.getTheme().getName()
             );
         } else {
-            throw new RuntimeException("Article non trouvé"); // ou exception custom
+            throw new NotFoundException("Article non trouvé"); // ou exception custom
         }
     }
 

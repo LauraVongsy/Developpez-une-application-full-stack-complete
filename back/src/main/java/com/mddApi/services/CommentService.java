@@ -1,12 +1,12 @@
 package com.mddApi.services;
 
-import com.mddApi.dtos.ArticleRequestDTO;
-import com.mddApi.dtos.ArticleResponseDTO;
+
 import com.mddApi.dtos.CommentRequestDTO;
 import com.mddApi.dtos.CommentResponseDTO;
+import com.mddApi.exceptions.BadRequestException;
+import com.mddApi.exceptions.NotFoundException;
 import com.mddApi.models.Article;
 import com.mddApi.models.Comment;
-import com.mddApi.models.Themes;
 import com.mddApi.models.Users;
 import com.mddApi.repositories.ArticleRepository;
 import com.mddApi.repositories.CommentRepository;
@@ -60,26 +60,27 @@ public class CommentService {
                     comment.getArticle().getId()
             );
         } else {
-            throw new RuntimeException("Article non trouvé"); // ou exception custom
+            throw new NotFoundException("Article non trouvé"); // ou exception custom
         }
     }
 
     public CommentResponseDTO createComment(CommentRequestDTO dto, Integer authorId, Integer articleId) {
-        // Récupération des entités
+        if (dto.getContent() == null || dto.getContent().isBlank()) {
+            throw new BadRequestException("Le contenu du commentaire ne peut pas être vide");
+        }
+
         Users author = userService.findById(authorId)
-                .orElseThrow(() -> new RuntimeException("Utilisateur non trouvé"));
+                .orElseThrow(() -> new NotFoundException("Utilisateur non trouvé"));
 
         Article article = articleRepository.findById(articleId)
-                .orElseThrow(() -> new RuntimeException("Article non trouvé"));
+                .orElseThrow(() -> new NotFoundException("Article non trouvé"));
 
-        // Création du commentaire
         Comment comment = new Comment();
         comment.setContent(dto.getContent());
         comment.setAuthor(author);
         comment.setArticle(article);
         comment.setCreatedAt(LocalDateTime.now());
 
-        // Sauvegarde
         Comment saved = commentRepository.save(comment);
 
         return new CommentResponseDTO(

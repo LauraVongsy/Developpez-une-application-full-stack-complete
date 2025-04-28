@@ -1,11 +1,14 @@
 package com.mddApi.services;
 
 import com.mddApi.dtos.SubscriptionResponseDTO;
+import com.mddApi.exceptions.BadRequestException;
+import com.mddApi.exceptions.NotFoundException;
 import com.mddApi.models.SubscriptionId;
 import com.mddApi.models.Subscriptions;
 import com.mddApi.models.Themes;
 import com.mddApi.repositories.SubscriptionRepository;
 import com.mddApi.repositories.ThemeRepository;
+import org.aspectj.bridge.IMessage;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -34,8 +37,7 @@ private ThemeRepository themeRepository;
             // Enregistrer l'abonnement dans la base de données
             subscriptionRepository.save(subscription);
         } else {
-            // Gérer si l'abonnement existe déjà (par exemple, afficher un message)
-            System.out.println("L'utilisateur est déjà abonné à ce thème.");
+           throw new BadRequestException("L'utilisateur est déjà abonné à ce thème");
         }
     }
 
@@ -55,16 +57,15 @@ private ThemeRepository themeRepository;
         return subscriptions.stream()
                 .map(sub -> {
                     // Trouver le thème correspondant à l'abonnement
-                    Optional<Themes> theme = themeRepository.findById(sub.getThemeId());
+                    Themes theme = themeRepository.findById(sub.getThemeId())
+                            .orElseThrow(() -> new NotFoundException("Thème introuvable pour l'abonnement."));
 
-                    // Si un thème est trouvé, mapper en SubscriptionResponseDTO
-                    return theme.map(t -> new SubscriptionResponseDTO(
-                            t.getId(),
-                            t.getName(),
-                            t.getDescription()
-                    )).orElse(null);  // Si le thème n'existe pas, retourner null
+                    return new SubscriptionResponseDTO(
+                            theme.getId(),
+                            theme.getName(),
+                            theme.getDescription()
+                    );
                 })
-                .filter(dto -> dto != null)  // Filtrer les valeurs null
                 .collect(Collectors.toList());
     }
 
