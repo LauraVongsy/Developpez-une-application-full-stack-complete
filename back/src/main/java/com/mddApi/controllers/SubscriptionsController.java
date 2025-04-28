@@ -1,6 +1,5 @@
 package com.mddApi.controllers;
 
-import com.mddApi.dtos.SubscriptionRequestDTO;
 import com.mddApi.dtos.SubscriptionResponseDTO;
 import com.mddApi.services.SubscriptionService;
 import com.mddApi.utils.ApiResponse;
@@ -12,6 +11,9 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
+/**
+ * Controller handling all the subscription related endpoints
+ */
 @RestController
 @RequestMapping("/themes")
 public class SubscriptionsController {
@@ -23,28 +25,44 @@ public class SubscriptionsController {
     private Integer extractUserIdFromToken(HttpServletRequest request) {
         String authHeader = request.getHeader("Authorization");
         if (authHeader == null || !authHeader.startsWith("Bearer ")) {
-            throw new RuntimeException("Token manquant ou invalide");
+            throw new RuntimeException("Missing or invalid token");
         }
 
         String token = authHeader.substring(7); // retire "Bearer "
         return jwtService.extractUserId(token);
     }
 
+    /**
+     * handles the subscription to a theme
+     * @param themeId
+     * @param request
+     * @return
+     */
     @PostMapping("/subscribe/{themeId}")
     public ResponseEntity<?> subscribe(@PathVariable Integer themeId, HttpServletRequest request) {
         Integer userId = extractUserIdFromToken(request);
         subscriptionService.subscribeToTheme(userId, themeId);
-        return ResponseEntity.ok(new ApiResponse("Abonnement réussi !"));
+        return ResponseEntity.ok(new ApiResponse("Subscription success !"));
     }
 
+    /**
+     * handles the unsubscription to a theme
+     * @param themeId
+     * @param request
+     * @return
+     */
     @PostMapping("/unsubscribe/{themeId}")
     public ResponseEntity<?> unsubscribe(@PathVariable Integer themeId, HttpServletRequest request) {
         Integer userId = extractUserIdFromToken(request);
         subscriptionService.unsubscribeFromTheme(userId, themeId);
-        return ResponseEntity.ok(new ApiResponse("Désabonnement réussi !"));
+        return ResponseEntity.ok(new ApiResponse("Unsubscription success !"));
     }
 
-
+    /**
+     * gets all the user subscriptions
+     * @param request
+     * @return
+     */
     @GetMapping("/subscriptions")
     public ResponseEntity<List<SubscriptionResponseDTO>> getUserSubscriptions(HttpServletRequest request) {
         Integer userId = extractUserIdFromToken(request);

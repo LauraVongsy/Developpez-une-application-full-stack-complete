@@ -10,7 +10,6 @@ import com.mddApi.models.Comment;
 import com.mddApi.models.Users;
 import com.mddApi.repositories.ArticleRepository;
 import com.mddApi.repositories.CommentRepository;
-import com.mddApi.utils.JwtService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -22,15 +21,17 @@ import java.util.stream.Collectors;
 @Service
 public class CommentService {
     @Autowired
-    CommentRepository commentRepository;
+    private CommentRepository commentRepository;
     @Autowired
-    JwtService jwtService;
+    private UserService userService;
     @Autowired
-    UserService userService;
-    @Autowired
-    ArticleRepository articleRepository;
+    private ArticleRepository articleRepository;
 
-
+    /**
+     *
+     * @param articleId
+     * @return all the comments for an article
+     */
     public List<CommentResponseDTO> getAllComments(Integer articleId){
         List<Comment> comments = commentRepository.findByArticleId(articleId);
 
@@ -46,6 +47,11 @@ public class CommentService {
                 .collect(Collectors.toList());
     }
 
+    /**
+     *
+     * @param id
+     * @return a comment by its id
+     */
     public CommentResponseDTO getCommentById(Integer id) {
         Optional<Comment> commentOpt = commentRepository.findById(id);
         if (commentOpt.isPresent()) {
@@ -60,20 +66,27 @@ public class CommentService {
                     comment.getArticle().getId()
             );
         } else {
-            throw new NotFoundException("Article non trouvé"); // ou exception custom
+            throw new NotFoundException("Article not found");
         }
     }
 
+    /**
+     *
+     * @param dto
+     * @param authorId
+     * @param articleId
+     * @return a new comment
+     */
     public CommentResponseDTO createComment(CommentRequestDTO dto, Integer authorId, Integer articleId) {
         if (dto.getContent() == null || dto.getContent().isBlank()) {
-            throw new BadRequestException("Le contenu du commentaire ne peut pas être vide");
+            throw new BadRequestException("Comment must contain text");
         }
 
         Users author = userService.findById(authorId)
-                .orElseThrow(() -> new NotFoundException("Utilisateur non trouvé"));
+                .orElseThrow(() -> new NotFoundException("User not found"));
 
         Article article = articleRepository.findById(articleId)
-                .orElseThrow(() -> new NotFoundException("Article non trouvé"));
+                .orElseThrow(() -> new NotFoundException("Article not found"));
 
         Comment comment = new Comment();
         comment.setContent(dto.getContent());

@@ -2,7 +2,6 @@ package com.mddApi.configuration;
 
 import com.mddApi.filter.JwtFilter;
 import com.mddApi.services.UserDetailsServiceImpl;
-import com.mddApi.services.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -27,13 +26,7 @@ import org.springframework.web.bind.annotation.CrossOrigin;
 @Configuration
 @EnableWebSecurity
 @CrossOrigin
-//@OpenAPIDefinition(info = @Info(title = "ChâTop API", version = "V1")) // Defines OpenAPI information for Swagger UI
-//@SecurityScheme(
-//        name = "Bearer Authentication",
-//        type = SecuritySchemeType.HTTP,
-//        bearerFormat = "JWT",
-//        scheme = "bearer"
-//)
+
 public class SpringSecurityConfig {
 
     @Autowired

@@ -5,7 +5,6 @@ import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
-import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import java.time.LocalDateTime;
@@ -14,17 +13,17 @@ import java.time.LocalDateTime;
 @Setter
 @AllArgsConstructor
 public class ArticleRequestDTO {
-    @NotBlank(message = "Le titre est obligatoire.")
-    @Size(max = 255, message = "Le titre ne peut pas dépasser 255 caractères.")
+    @NotBlank(message = "Title is required")
+    @Size(max = 255, message = "Title can not exceed 255 characters")
     private String title;
 
-    @NotBlank(message = "L'article doit contenir un texte'.")
+    @NotBlank(message = "The article must contain text.")
     private String content;
 
     private LocalDateTime createdAt;
     private LocalDateTime updatedAt;
 
-    @NotNull(message = "Le titre est obligatoire.")
+    @NotNull(message = "Title is required.")
     private Integer themeId;
 
 }

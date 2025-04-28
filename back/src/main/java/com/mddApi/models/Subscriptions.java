@@ -17,21 +17,21 @@ import lombok.Setter;
 @NoArgsConstructor
 @Entity
 @Table(name = "Subscription")
-@IdClass(SubscriptionId.class)  // Indication de l'utilisation de la clé primaire composée
+@IdClass(SubscriptionId.class)  // composite key for userId and themeId
 public class Subscriptions {
 
-    @Id  // Indique que c'est une partie de la clé primaire composée
+    @Id
     @Column(name = "user_id")
     private Integer userId;
 
-    @Id  // Indique que c'est une autre partie de la clé primaire composée
+    @Id
     @Column(name = "theme_id")
     private Integer themeId;
 
     @Column(name = "subscribed_at", nullable = false)
     private java.sql.Timestamp subscribedAt;
 
-    // Liens avec les autres entités
+
     @ManyToOne
     @JoinColumn(name = "user_id", referencedColumnName = "id", insertable = false, updatable = false, foreignKey = @ForeignKey(name = "fk_user_subscription"))
     private Users user;

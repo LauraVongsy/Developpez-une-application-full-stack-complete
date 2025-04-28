@@ -11,7 +11,6 @@ import java.util.List;
 @Component
 public class UsersMapper {
 
-    // Convertir Users (entité) en UserResponseDTO (pour les réponses sortantes)
     public UserResponseDTO toResponseDTO(Users user) {
         if (user == null) {
             return null;
@@ -24,11 +23,9 @@ public class UsersMapper {
         dto.setCreated_at(user.getCreated_at());
         dto.setUpdated_at(user.getUpdated_at());
 
-        // Password est ignoré grâce à @JsonIgnore dans UserResponseDTO
         return dto;
     }
 
-    // Convertir UserRequestDTO (pour les requêtes entrantes) en Users (entité)
     public Users toEntity(UserRequestDTO userRequestDTO) {
         if (userRequestDTO == null) {
             return null;
@@ -41,7 +38,6 @@ public class UsersMapper {
         return user;
     }
 
-    // Convertir une liste de Users en une liste de UserResponseDTO
     public List<UserResponseDTO> toResponseDTOList(List<Users> users) {
         if (users == null || users.isEmpty()) {
             return new ArrayList<>();
@@ -54,7 +50,6 @@ public class UsersMapper {
         return responseDTOList;
     }
 
-    // Convertir une liste de UserRequestDTO en une liste de Users
     public List<Users> toEntityList(List<UserRequestDTO> userRequestDTOs) {
         if (userRequestDTOs == null || userRequestDTOs.isEmpty()) {
             return new ArrayList<>();

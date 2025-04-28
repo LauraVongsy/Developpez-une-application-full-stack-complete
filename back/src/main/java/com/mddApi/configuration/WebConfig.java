@@ -14,11 +14,11 @@ public class WebConfig {
         return new WebMvcConfigurer() {
             @Override
             public void addCorsMappings(@NonNull CorsRegistry registry) {
-                registry.addMapping("/**") // Applying cors to all endpoints
-                        .allowedOrigins("http://localhost:4200") // Authorizing requests from localhost:4200
-                        .allowedMethods("GET", "POST", "PUT", "DELETE", "OPTIONS") // allowed http methods
-                        .allowedHeaders("*") // allowed headers
-                        .allowCredentials(true); // allow credentials
+                registry.addMapping("/**")
+                        .allowedOrigins("http://localhost:4200")
+                        .allowedMethods("GET", "POST", "PUT", "DELETE", "OPTIONS")
+                        .allowedHeaders("*")
+                        .allowCredentials(true);
             }
 
             @Override

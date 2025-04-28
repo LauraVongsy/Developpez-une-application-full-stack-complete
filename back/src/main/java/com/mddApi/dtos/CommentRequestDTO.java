@@ -11,13 +11,13 @@ import java.time.LocalDateTime;
 @Setter
 @AllArgsConstructor
 public class CommentRequestDTO {
-        @NotBlank(message = "Le commentaire doit avoir un contenu")
+        @NotBlank(message = "Comment must contain text")
         private String content;
 
         private LocalDateTime createdAt;
         private LocalDateTime updatedAt;
 
-        @NotNull(message = "Le commentaire doit correspondre à un article en particulier")
+        @NotNull(message = "The comment must have an articleId")
         private Integer articleId;
 
 

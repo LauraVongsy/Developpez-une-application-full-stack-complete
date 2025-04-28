@@ -20,12 +20,14 @@ import java.util.stream.Collectors;
 @Service
 public class ArticleService {
     @Autowired
-    ArticleRepository articleRepository;
+    private ArticleRepository articleRepository;
     @Autowired
-    ThemeRepository themeRepository;
-    @Autowired
-    JwtService jwtService;
+    private ThemeRepository themeRepository;
 
+/**
+ * @param subscriptions
+ * gets all the user's themes subscriptions and returns the articles linked to the themes
+ **/
     public List<ArticleResponseDTO> getAllArticles(List<SubscriptionResponseDTO> subscriptions) {
         List<Integer> themeIds = subscriptions
                 .stream()
@@ -47,7 +49,10 @@ public class ArticleService {
                 .collect(Collectors.toList());
     }
 
-
+/**
+ * @param id
+ * @return an article by its id
+ **/
     public ArticleResponseDTO getArticleById(Integer id) {
         Optional<Article> articleOpt = articleRepository.findById(id);
         if (articleOpt.isPresent()) {
@@ -62,10 +67,15 @@ public class ArticleService {
                     article.getTheme().getName()
             );
         } else {
-            throw new NotFoundException("Article non trouvé"); // ou exception custom
+            throw new NotFoundException("Article not found"); // ou exception custom
         }
     }
 
+    /**
+     * @param dto
+     * @param authorId
+     * @return a new article
+     */
     public ArticleResponseDTO createArticle(ArticleRequestDTO dto, Integer authorId) {
 
         Article article = new Article();
@@ -73,27 +83,23 @@ public class ArticleService {
         article.setContent(dto.getContent());
         article.setCreatedAt(dto.getCreatedAt());
 
-        // Associer un utilisateur à partir de son ID
         Users author = new Users();
         author.setId(authorId);
         article.setAuthor(author);
 
-        // Associer un thème à partir de son ID
         Themes theme = new Themes();
         theme.setId(dto.getThemeId());
         article.setTheme(theme);
 
-        // Sauvegarde en base
         Article saved = articleRepository.save(article);
 
-        // Construction de la réponse DTO avec noms de l’auteur et du thème
         return new ArticleResponseDTO(
                 saved.getId(),
                 saved.getTitle(),
                 saved.getContent(),
                 saved.getCreatedAt(),
-                saved.getAuthor().getUsername(), // Assure-toi que ce getter existe bien
-                saved.getTheme().getName()       // Idem ici
+                saved.getAuthor().getUsername(),
+                saved.getTheme().getName()
         );
     }
 

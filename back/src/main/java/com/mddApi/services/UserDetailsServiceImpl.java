@@ -11,6 +11,13 @@ import org.springframework.stereotype.Service;
 
 import java.util.Optional;
 
+/**
+ * Service implementation of UserDetailsService for Spring Security.
+ * This class is responsible for loading user details based on the user's email address
+ * to allow Spring Security to perform authentication.
+ * When a user attempts to log in, Spring Security uses this service to retrieve
+ * the user's information (credentials, roles, etc.).
+ */
 @Service
 public class UserDetailsServiceImpl  implements UserDetailsService {
     @Autowired

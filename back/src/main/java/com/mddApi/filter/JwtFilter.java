@@ -1,7 +1,6 @@
 package com.mddApi.filter;
 
 import com.mddApi.services.UserDetailsServiceImpl;
-import com.mddApi.services.UserService;
 import com.mddApi.utils.JwtService;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
@@ -40,7 +39,6 @@ public class JwtFilter extends OncePerRequestFilter {
 
     @Override
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain) throws ServletException, IOException {
-        //Extract token from request header
         String authHeader = request.getHeader("Authorization");
         String token = null;
         String userName = null;
@@ -54,7 +52,6 @@ public class JwtFilter extends OncePerRequestFilter {
             //Loading UserDetails by username extracted from the token
             UserDetails userDetails = getUserService().loadUserByUsername(userName);
 
-            //Validates the token with loaded UserDetails
             if (jwtService.validateToken(token, userDetails)) {
                 //Creates an authentication token using UserDetails
                 UsernamePasswordAuthenticationToken authenticationToken = new UsernamePasswordAuthenticationToken(userDetails, token, userDetails.getAuthorities());
@@ -65,7 +62,6 @@ public class JwtFilter extends OncePerRequestFilter {
             }
 
         }
-        //Proceeding with the filter chain
         filterChain.doFilter(request, response);
 
     }

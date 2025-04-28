@@ -3,11 +3,14 @@ package com.mddApi.models;
 import java.io.Serializable;
 import java.util.Objects;
 
+/**
+ * this class is for the composite key userId + themeId, to get a user subscriptions
+ **/
+
 public class SubscriptionId implements Serializable {
     private Integer userId;
     private Integer themeId;
 
-    // Constructeurs, getters et setters, equals() et hashCode()
 
     public SubscriptionId() {
     }

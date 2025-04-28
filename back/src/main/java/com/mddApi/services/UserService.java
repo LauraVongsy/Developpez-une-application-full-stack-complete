@@ -1,7 +1,5 @@
 package com.mddApi.services;
 
-
-
 import com.mddApi.dtos.UserRequestDTO;
 import com.mddApi.dtos.UserResponseDTO;
 import com.mddApi.dtos.UserUpdateDTO;
@@ -32,11 +30,24 @@ public class UserService {
     @Autowired
     private UsersMapper usersMapper;
 
+    /**
+     * Find a user by their unique ID.
+     *
+     * @param userId the ID of the user
+     * @return an Optional containing the found user, or empty if no user was found
+     */
     public Optional<Users> findById(Integer userId){
         return userRepository.findById(userId);
     }
 
-
+    /**
+     * Registers a new user in the system.
+     * Throws an exception if the email is already in use.
+     *
+     * @param userRequestDTO the user registration information
+     * @return a JWT token for the newly registered user
+     * @throws BadRequestException if the email is already registered
+     */
     public String register(UserRequestDTO userRequestDTO) {
         if (userRepository.findByEmail(userRequestDTO.getEmail()).isPresent()) {
             throw new BadRequestException("This email is already in use");
@@ -62,10 +73,10 @@ public class UserService {
      */
     public String login(UserRequestDTO userDTO) {
         Users user = userRepository.findByEmail(userDTO.getEmail())
-                .orElseThrow(() -> new NotFoundException("Utilisateur non trouvé avec cet email : " + userDTO.getEmail()));
+                .orElseThrow(() -> new NotFoundException("No user found with this email: " + userDTO.getEmail()));
 
         if (!passwordEncoder.matches(userDTO.getPassword(), user.getPassword())) {
-            throw new BadRequestException("Mot de passe incorrect");
+            throw new BadRequestException("Incorrect password");
         }
 
         return jwtService.generateToken(user.getEmail(), user.getId());
@@ -88,11 +99,20 @@ public class UserService {
 
     }
 
+    /**
+     * Updates user information.
+     * If the email is changed, a new JWT token is generated and returned.
+     *
+     * @param userUpdateDTO the updated user information
+     * @param userId the ID of the user to update
+     * @return a new JWT token if the update is successful
+     * @throws NotFoundException if the user does not exist
+     */
     public String updateUser(UserUpdateDTO userUpdateDTO, Integer userId) {
         System.out.print(userUpdateDTO);
         System.out.print(userId);
         Users user = userRepository.findById(userId)
-                .orElseThrow(() -> new NotFoundException("Utilisateur introuvable"));
+                .orElseThrow(() -> new NotFoundException("User not found"));
 
         if (userUpdateDTO.getUsername() != null) user.setUsername(userUpdateDTO.getUsername());
         if (userUpdateDTO.getEmail() != null) user.setEmail(userUpdateDTO.getEmail());
@@ -102,7 +122,6 @@ public class UserService {
 
         userRepository.save(user);
 
-        // Renvoyer un nouveau token si email changé
         return jwtService.generateToken(user.getEmail(), user.getId());
     }
 
