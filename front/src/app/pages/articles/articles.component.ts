@@ -14,7 +14,7 @@ import { CommentsService } from 'src/app/services/comments.service';
 export class ArticlesComponent implements OnInit {
 
   article!: Article;
-  commentText: string = '';  // 👈 pour lier à l’input
+  commentText: string = ''; 
   comments: Comment[]=[];
 
   constructor( 
@@ -52,7 +52,6 @@ public getComments(){
   this.commentsService.getAllComments(this.article.id).subscribe({
     next: (data) => {
       this.comments = data;
-      console.log("comments", this.comments)
     },
     error: (err) => {
       console.error('Erreur lors du chargement des commentaires:', err);
@@ -68,8 +67,8 @@ public sendComment(articleId: number) {
 
   this.commentsService.createComment(articleId, newComment).subscribe({
     next: (comment) => {
-      this.comments.push(comment); // Ajout du nouveau commentaire dans la liste
-      this.commentText = '';       // Reset de l’input
+      this.comments.push(comment); 
+      this.commentText = '';     
     },
     error: (err) => console.error(err)
   });

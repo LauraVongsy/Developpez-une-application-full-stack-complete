@@ -12,7 +12,6 @@ export class CommentsService {
 
   constructor(private httpClient: HttpClient) {}
 
-  // Utilisation d'Observable pour obtenir les thèmes
   public getAllComments(id:number): Observable<Comment[]> {
     return  this.httpClient.get<Comment[]>(`${this.pathService}/articles/${id}/comments`);
   }

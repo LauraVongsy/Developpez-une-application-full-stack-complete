@@ -18,7 +18,6 @@ export class RegisterComponent {
   constructor(private authService: AuthService,
               private fb: FormBuilder,
               private router: Router) {
-    // Déplacer l'initialisation ici, car fb est maintenant défini
     this.form = this.fb.group({
       email: [
         '',
@@ -31,7 +30,7 @@ export class RegisterComponent {
         '',
         [
           Validators.required,
-          Validators.minLength(3), // `minLength` et `maxLength` au lieu de `min` et `max`
+          Validators.minLength(3), 
           Validators.maxLength(20)
         ]
       ],

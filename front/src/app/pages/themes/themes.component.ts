@@ -21,12 +21,10 @@ export class ThemesComponent implements OnInit {
     this.getAllSubscriptions();
   }
 
-  // Utilisation d'Observable avec .subscribe() pour récupérer les thèmes
   public getThemes(): void {
     this.themesService.getThemes().subscribe(
       (themes: Themes[]) => {
         this.themes = themes;
-        console.log('Thèmes récupérés:', this.themes);
       },
       (error) => {
         console.error('Erreur lors de la récupération des thèmes:', error);
@@ -34,12 +32,10 @@ export class ThemesComponent implements OnInit {
     );
   }
 
-  // Souscrire à un thème
   public subscribeToTheme(id: number): void {
     this.themesService.subscribeToTheme(id).subscribe(
       () => {
-        console.log('Souscription réussie au thème', id);
-        this.getThemes();  // Recharger la liste des thèmes après l'abonnement
+        this.getThemes();  
       },
       (error) => {
         console.error('Erreur lors de la souscription au thème:', error);
@@ -47,23 +43,21 @@ export class ThemesComponent implements OnInit {
     );
   }
 
-  // Se désabonner d'un thème
+
   public unsubscribeToTheme(id: number): void {
     this.themesService.unsubscribeToTheme(id).subscribe(
       () => {
-        console.log('Désabonnement réussi du thème', id);
-        this.getThemes();  // Recharger la liste des thèmes après la désinscription
+        this.getThemes();
       },
       (error) => {
         console.error('Erreur lors de la désinscription du thème:', error);
       }
     );
   }
-  // Récupérer les abonnements de l'utilisateur
+
   public getAllSubscriptions(): void {
     this.themesService.getAllSubscriptions().subscribe(
       (subscriptions: Subscriptions[]) => {
-        console.log('Abonnements récupérés:', subscriptions);
         this.subscribedThemes = subscriptions;
       },  
       (error) => {
@@ -72,9 +66,6 @@ export class ThemesComponent implements OnInit {
     );
   }
   public isSubscribed(themeId: number): boolean {
-    console.log('Vérification de l\'abonnement pour le thème ID:', themeId);
-    console.log('Thèmes abonnés:', this.subscribedThemes);
-    console.log('on est abonne?', this.subscribedThemes.some(theme => theme.themeId === themeId));
     return this.subscribedThemes.some(theme => theme.themeId === themeId);
   }
 }

@@ -38,9 +38,8 @@ constructor(
   public getAllArticles(): void {
     this.articlesService.getAllArticles().subscribe(
       (articles) => {
-        console.log('Articles récupérés:', articles);
         this.articles = articles;
-        this.sortArticles(); // Appel de la méthode de tri après la récupération des articles
+        this.sortArticles(); 
       },
       (error) => {
         console.error('Erreur lors de la récupération des articles:', error); 
@@ -52,18 +51,12 @@ constructor(
     this.sortedArticles = this.articles.slice().sort((a, b) => {
       const dateA = new Date(a.createdAt).getTime();
       const dateB = new Date(b.createdAt).getTime();
-      console.log('createdAt:', a.createdAt);
-      console.log('dateA:', dateA);
-
-      console.log('createdAt:', b.createdAt); 
-      console.log('dateB:', dateB);
       return this.sortDescending ? dateB - dateA : dateA - dateB;
     });
   }
 
   public toggleSortOrder(): void {
     this.sortDescending = !this.sortDescending;
-    console.log('sortDescending:', this.sortDescending);
     this.sortArticles();
   }
 

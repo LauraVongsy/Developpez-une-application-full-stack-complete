@@ -1,14 +1,13 @@
 /* Variables */
-$primary-color: #1976d2;  // Couleur primaire pour la bordure et les boutons
-$primary-color-dark: #1565c0;  // Couleur primaire au focus ou survol
+$primary-color: #1976d2;  
+$primary-color-dark: #1565c0; 
 
-/* Styles pour le conteneur du formulaire */
+
 .create-article {
   display: flex;
-  justify-content: center; /* Centre le formulaire horizontalement */
-  align-items: center; /* Centre le formulaire verticalement */
-  min-height: 100vh; /* Prend toute la hauteur de la fenêtre */
-  width: 100vw; /* Prend toute la largeur de la fenêtre */
+  justify-content: center;
+  align-items: center; 
+  width: 100vw; 
 }
 
 mat-card {
@@ -16,7 +15,7 @@ mat-card {
     flex-direction: column;
     justify-content: center;
     align-items: center;
-  background-color: white; /* Fond blanc pour le formulaire */
+  background-color: white;
   padding: 20px;
   border:none !important;
   box-shadow:none !important;
@@ -33,7 +32,7 @@ mat-card-header {
 
 mat-form-field {
   display: block;
-  margin-bottom: 20px; /* Espacement entre les champs */
+  margin-bottom: 20px; 
   .mat-form-field-appearance-outline .mat-form-field-outline {
     color: purple;
   }
@@ -55,21 +54,26 @@ button {
   border: none;
   border-radius: 4px;
   cursor: pointer;
-  transition: background-color 0.3s ease; /* Transition pour l'effet hover */
+  transition: background-color 0.3s ease; 
 }
 
 button:disabled {
-  background-color: #b0bec5; /* Couleur grise pour les boutons désactivés */
+  background-color: #b0bec5; 
 }
 
 button:hover {
-  background-color: $primary-color-dark; /* Effet au survol */
+  background-color: $primary-color-dark; 
 }
 
-/* Affichage de l'erreur */
+
 .error {
   color: red;
   display: block;
   text-align: center;
   margin-top: 10px;
+}
+@media (max-width:480px){
+  mat-card-content{
+    width: 80vw;
+  }
 }

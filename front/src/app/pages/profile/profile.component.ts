@@ -26,7 +26,7 @@ export class ProfileComponent implements OnInit {
             {
 
 
-    // Déplacer l'initialisation ici, car fb est maintenant défini
+   
     this.form = this.fb.group({
       username: [
         '',
@@ -56,11 +56,9 @@ export class ProfileComponent implements OnInit {
     this.getAllSubscriptions();
   }
 
-// Récupérer les abonnements de l'utilisateur
   public getAllSubscriptions(): void {
     this.themesService.getAllSubscriptions().subscribe(
       (subscriptions: Subscriptions[]) => {
-        console.log('Abonnements récupérés:', subscriptions);
         this.subscribedThemes = subscriptions;
       },
       (error) => {
@@ -80,14 +78,12 @@ export class ProfileComponent implements OnInit {
       .catch(() => {
         this.onError = true;
       });
-      console.log(userUpdateData);
   }
 
   public unsubscribeToTheme(id: number): void {
     this.themesService.unsubscribeToTheme(id).subscribe(
       () => {
-        console.log('Désinscription réussie', id);
-        this.getAllSubscriptions();  // Recharger la liste des thèmes après l'abonnement
+        this.getAllSubscriptions(); 
       },
       (error) => {
         console.error('Erreur lors de la désinscription au thème:', error);

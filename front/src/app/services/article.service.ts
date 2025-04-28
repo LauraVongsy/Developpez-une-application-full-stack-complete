@@ -13,7 +13,6 @@ export class ArticleService {
 
   constructor(private httpClient: HttpClient) {}
 
-  // Utilisation d'Observable pour obtenir les thèmes
   public getAllArticles(): Observable<Article[]> {
     return  this.httpClient.get<Article[]>(`${this.pathService}/articles`);
   }

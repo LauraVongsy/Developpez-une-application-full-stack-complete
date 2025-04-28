@@ -39,9 +39,9 @@ export class AuthService {
       tap(response => {
         const token = response.token;
         if (token) {
-          localStorage.setItem('token', token); // ou sessionStorage selon ton choix
+          localStorage.setItem('token', token); 
           this.isLogged = true;
-          this.next(); // Met à jour le BehaviorSubject
+          this.next();
         }
       })
     );

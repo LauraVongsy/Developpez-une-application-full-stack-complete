@@ -55,7 +55,7 @@ import { ButtonGoBackComponent } from './components/button-go-back/button-go-bac
   providers: [{
     provide: HTTP_INTERCEPTORS,
     useClass: AuthInterceptor,
-    multi: true  // Important, permet d'avoir plusieurs interceptors si besoin
+    multi: true 
   }],
   bootstrap: [AppComponent],
 })

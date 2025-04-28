@@ -17,7 +17,6 @@ public onError = false;
   constructor(private authService: AuthService,
               private fb: FormBuilder,
               private router: Router) {
-    // Déplacer l'initialisation ici, car fb est maintenant défini
     this.form = this.fb.group({
       email: [
         '',

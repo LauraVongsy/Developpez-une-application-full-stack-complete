@@ -15,7 +15,6 @@ export class UserService {
     password: string;
   }): Promise<void> {
     try {
-      // Requête PUT pour mettre à jour l'utilisateur
       await this.httpClient
         .put(`${this.pathService}/user/update`, userUpdate)
         .toPromise();

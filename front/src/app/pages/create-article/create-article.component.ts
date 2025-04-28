@@ -18,16 +18,16 @@ export class CreateArticleComponent implements OnInit {
   constructor(
     private fb: FormBuilder,
     private themesService: ThemesService,
-    private articleService: ArticleService// Remplacez par le service approprié pour créer un article
+    private articleService: ArticleService
   ) {}
 
   ngOnInit(): void {
     this.getAllThemes();
-    // Initialisation du formulaire avec les contrôles de validation
+   
     this.form = this.fb.group({
       themeId: [null, Validators.required],
       title: ['', [Validators.required, Validators.maxLength(100)]],
-      content: ['', [Validators.required, Validators.maxLength(500)]],
+      content: ['', [Validators.required, Validators.maxLength(5000)]],
     });
   }
 
@@ -35,12 +35,11 @@ export class CreateArticleComponent implements OnInit {
   this.themesService.getThemes().subscribe(
     (themes: Themes[]) => {
       this.themes = themes;
-      console.log('Thèmes récupérés:', this.themes);
     }
   );
   
   }
-  // Méthode qui gère la soumission du formulaire
+ 
   submit() {
     if (this.form.invalid) {
       this.onError = true;
@@ -48,8 +47,6 @@ export class CreateArticleComponent implements OnInit {
     }
   this.articleService.createArticle(this.form.value).subscribe(
       (response) => {
-        console.log('Article créé avec succès:', response);
-        // Réinitialiser le formulaire après la soumission réussie
         this.form.reset();
         this.onError = false;
       },
