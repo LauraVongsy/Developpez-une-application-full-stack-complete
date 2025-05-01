@@ -1,25 +1,36 @@
-# P6-Full-Stack-reseau-dev
+# Projet MDD
+MDD est un réseau social dédié aux développeurs, conçu pour favoriser l'entraide, la collaboration entre pairs et faciliter le recrutement dans les métiers du développement informatique. L’objectif est de créer un espace où les développeurs peuvent se connecter autour de sujets techniques communs et mettre en valeur leur expertise.
 
-## Front
+Dans un premier temps, le projet est développé sous forme de MVP (Minimum Viable Product), destiné à un déploiement en interne.
 
-This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 14.1.3.
+## Technologies utilisées
+Frontend - Angular 19
 
-Don't forget to install your node_modules before starting (`npm install`).
+Backend - Java 21 avec spring boot
 
-### Development server
+## Installation
 
-Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The application will automatically reload if you change any of the source files.
+###  Backend (Java / Spring Boot)
 
-### Build
+Depuis le dossier du backend
+```bash
+mvn clean install
+mvn spring-boot:run 
+```
 
-Run `ng build` to build the project. The build artifacts will be stored in the `dist/` directory.
+###  frontend (angular)
 
-### Where to start
+Depuis le dossier du frontend
 
-As you may have seen if you already started the app, a simple home page containing a logo, a title and a button is available. If you take a look at its code (in the `home.component.html`) you will see that an external UI library is already configured in the project.
+```bash
+npm install
+npm run start
+```
 
-This library is `@angular/material`, it's one of the most famous in the angular ecosystem. As you can see on their docs (https://material.angular.io/), it contains a lot of highly customizable components that will help you design your interfaces quickly.
+###  Base de données
 
-Note: I recommend to use material however it's not mandatory, if you prefer you can get rid of it.
+Le script pour générer la base de données se trouve dans
+```bash
+back > resources > sql
+```
 
-Good luck!
