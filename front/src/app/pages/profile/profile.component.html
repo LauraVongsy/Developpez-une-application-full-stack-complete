@@ -41,7 +41,6 @@
       <mat-card-title>Abonnements</mat-card-title>
     </mat-card-header>
     <div class="posts-container">
-      <!-- Loop à travers les thèmes et créer une mat-card pour chaque thème -->
     <mat-card *ngFor="let subscription of subscribedThemes" class="theme-card">
       <mat-card-header>
         <mat-card-title>{{ subscription.themeName }}</mat-card-title>

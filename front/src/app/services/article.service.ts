@@ -9,7 +9,6 @@ import { Observable } from 'rxjs';
 export class ArticleService {
 
   private pathService = 'http://localhost:8080';
-  private articles: Article[] = [];
 
   constructor(private httpClient: HttpClient) {}
 
