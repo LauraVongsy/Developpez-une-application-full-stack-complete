@@ -4,6 +4,8 @@ import { Subscriptions } from 'src/app/interfaces/Subscriptions.interface';
 import { ThemesService } from 'src/app/services/themes.service';
 import { UserService } from 'src/app/services/user.service';
 import { MatSnackBar } from '@angular/material/snack-bar';
+import { Observable } from 'rxjs';
+import { AuthService } from 'src/app/services/auth.service';
 
 @Component({
   selector: 'app-profile',
@@ -21,7 +23,8 @@ export class ProfileComponent implements OnInit {
               private fb: FormBuilder,
               private themesService: ThemesService,
               private userService: UserService,
-              private snackBar: MatSnackBar
+              private snackBar: MatSnackBar,
+              private authService : AuthService
             )
             {
 
@@ -54,6 +57,10 @@ export class ProfileComponent implements OnInit {
   ngOnInit(): void {
  
     this.getAllSubscriptions();
+  }
+
+  public $isLogged(): Observable<boolean> {
+    return this.authService.$isLogged();
   }
 
   public getAllSubscriptions(): void {
