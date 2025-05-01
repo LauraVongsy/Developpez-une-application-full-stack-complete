@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { Router } from '@angular/router';
 import { Themes } from 'src/app/interfaces/Themes.interface';
 import { ArticleService } from 'src/app/services/article.service';
 import { ThemesService } from 'src/app/services/themes.service';
@@ -18,7 +19,8 @@ export class CreateArticleComponent implements OnInit {
   constructor(
     private fb: FormBuilder,
     private themesService: ThemesService,
-    private articleService: ArticleService
+    private articleService: ArticleService,
+    private router: Router
   ) {}
 
   ngOnInit(): void {
@@ -49,6 +51,7 @@ export class CreateArticleComponent implements OnInit {
       (response) => {
         this.form.reset();
         this.onError = false;
+        this.router.navigate(['/home']);
       },
       (error) => {
         console.error('Erreur lors de la création de l\'article:', error);
