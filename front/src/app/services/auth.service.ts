@@ -1,6 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { BehaviorSubject, Observable, tap } from 'rxjs';
+import { BehaviorSubject, Observable, tap, map } from 'rxjs';
 import { RegisterRequest } from '../interfaces/RegisterRequest.interface';
 import { LoginRequest } from '../interfaces/LoginRequest.interface';
 import { SessionInformation } from '../interfaces/SessionInformation.interface';
@@ -22,15 +22,21 @@ export class AuthService {
   }
 
   public register(registerRequest: RegisterRequest): Observable<void> {
-    return this.httpClient.post<void>(`${this.pathService}/register`, registerRequest, {
+    return this.httpClient.post<{ token: string }>(`${this.pathService}/register`, registerRequest, {
       withCredentials: true
     }).pipe(
-      tap(() => {
-        this.isLogged = true;
-        this.next();  // Met à jour BehaviorSubject
-      })
+      tap(response => {
+        const token = response.token;
+        if (token) {
+          localStorage.setItem('token', token);
+          this.isLogged = true;
+          this.next();
+        }
+      }),
+      map(() => {}) // pour renvoyer Observable<void>
     );
   }
+  
   
   public login(loginRequest: LoginRequest): Observable<{ token: string; }> {
     return this.httpClient.post<{ token: string }>(`${this.pathService}/login`, loginRequest, {

@@ -1,11 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, Validators } from '@angular/forms';
-import { Router } from '@angular/router';
-import { RegisterRequest } from 'src/app/interfaces/RegisterRequest.interface';
 import { Subscriptions } from 'src/app/interfaces/Subscriptions.interface';
-import { AuthService } from 'src/app/services/auth.service';
 import { ThemesService } from 'src/app/services/themes.service';
 import { UserService } from 'src/app/services/user.service';
+import { MatSnackBar } from '@angular/material/snack-bar';
 
 @Component({
   selector: 'app-profile',
@@ -22,7 +20,9 @@ export class ProfileComponent implements OnInit {
   constructor(
               private fb: FormBuilder,
               private themesService: ThemesService,
-              private userService: UserService) 
+              private userService: UserService,
+              private snackBar: MatSnackBar
+            )
             {
 
 
@@ -75,8 +75,16 @@ export class ProfileComponent implements OnInit {
     };
   
     this.userService.updateUser(userUpdateData)
+    .then(() => {
+      this.snackBar.open('Profil mis à jour avec succès', 'Fermer', {
+        duration: 3000
+      });
+    })
       .catch(() => {
         this.onError = true;
+        this.snackBar.open('Erreur lors de la mise à jour du profil', 'Fermer', {
+          duration: 3000
+        });
       });
   }
 

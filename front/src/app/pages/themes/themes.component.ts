@@ -35,14 +35,14 @@ export class ThemesComponent implements OnInit {
   public subscribeToTheme(id: number): void {
     this.themesService.subscribeToTheme(id).subscribe(
       () => {
-        this.getThemes();  
+        this.getAllSubscriptions();
       },
       (error) => {
         console.error('Erreur lors de la souscription au thème:', error);
       }
     );
   }
-
+  
 
   public unsubscribeToTheme(id: number): void {
     this.themesService.unsubscribeToTheme(id).subscribe(
